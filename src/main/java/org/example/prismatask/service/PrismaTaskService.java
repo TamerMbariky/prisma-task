@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.example.prismatask.dto.PrismaTaskConstants.INPUT_NULL_OR_EMPTY;
@@ -44,7 +45,11 @@ public class PrismaTaskService {
         LOG.info("\"{}\" sorted is \"{}\"", inputWord, sortedInputWord);
         List<String> permutationsList = wordsCleanRepository.getPermutations(sortedInputWord);
         LOG.info("{} permutations of \"{}\"", permutationsList.size() - 1, inputWord);
-        return permutationsList;
+        //BUG FIX ,The remove was done on the list inside the map ,
+        // so the change was deleting the inputWord from the map
+        List<String> toReturn = new ArrayList<>(permutationsList);
+        toReturn.remove(inputWord);
+        return toReturn;
     }
 
 

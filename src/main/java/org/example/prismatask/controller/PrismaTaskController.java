@@ -40,7 +40,6 @@ public class PrismaTaskController {
     public SimilarResponse getSimilar(@RequestParam("word")String word) throws Exception {
         int start = (int) System.nanoTime();
         List<String> similar = prismaTaskService.getPermutations(word);
-        similar.remove(word);
         SimilarResponse similarResponse = new SimilarResponse(similar);
         int end = (int) System.nanoTime();
         // adds the processing time to the average
