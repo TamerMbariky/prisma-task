@@ -19,6 +19,15 @@ public class PrismaTaskService {
     }
 
 
+    /**
+     *
+     * @param inputWord The parameter to work on
+     * 1) sort the word letters using count sort
+     * 2) find if our permutation map has any key matching the permutation
+     * 3) return the list of permutations if found
+     * @return List of permutations
+     * @throws Exception if input word is not alphabetic
+     */
     public List<String> getPermutations(String inputWord) throws Exception {
         String sortedInputWord = countSort(inputWord);
         return wordsCleanRepository.getPermutations(sortedInputWord);

@@ -27,6 +27,7 @@ public class StatsResponse {
     }
 
     public void addProcessingTime(int requestProcessingTimeNs){
+        //synchronized so multitasking will not corrupt the calculations
         synchronized (this){
             int averageMultiTotalReqPlusCurrentPros=((totalRequests*avgProcessingTimeNs) + requestProcessingTimeNs);
             totalRequests++;

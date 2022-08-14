@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StringSortHelperTest {
 
     @Test
-    void countSort() {
+    void countSort() throws Exception {
         for(int i=0 ; i<= 1000 ; i++){
             String testString = RandomStringUtils.randomAlphabetic(i+1);
             List<String> stringList = new ArrayList<>();

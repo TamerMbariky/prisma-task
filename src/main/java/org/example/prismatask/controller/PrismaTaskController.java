@@ -1,14 +1,19 @@
 package org.example.prismatask.controller;
 
+import org.example.prismatask.dto.InputError;
 import org.example.prismatask.dto.SimilarResponse;
 import org.example.prismatask.dto.StatsResponse;
 import org.example.prismatask.service.PrismaTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -38,6 +43,7 @@ public class PrismaTaskController {
         similar.remove(word);
         SimilarResponse similarResponse = new SimilarResponse(similar);
         int end = (int) System.nanoTime();
+        // adds the processing time to the average
         statsResponse.addProcessingTime(end-start);
         return similarResponse;
     }
@@ -46,5 +52,15 @@ public class PrismaTaskController {
     @GetMapping(value="/stats",produces = MediaType.APPLICATION_JSON_VALUE)
     public StatsResponse stats() {
         return statsResponse;
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handle(Exception ex,
+                                         HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (ex instanceof NullPointerException) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.badRequest().body(new InputError(ex.getMessage()));
     }
 }

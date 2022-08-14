@@ -1,11 +1,13 @@
 package org.example.prismatask.helpers;
 
+import static org.example.prismatask.dto.PrismaTaskConstants.INPUT_NOT_ALPHA_ERR;
+
 public class StringSortHelper {
 
 
     // TIME COMPLEXITY O(N)
     // SPACE COMPLEXITY O(N + K) -- O(N) as k is a know = 26
-    public static String countSort(String word){
+    public static String countSort(String word) throws Exception {
         int[] alphabet = new int[26]; // create array with the number of english alphabet letters
 
 
@@ -51,13 +53,16 @@ public class StringSortHelper {
         return String.valueOf(sortedString);
     }
 
-    private static Integer getLetterNumber(char letter) {
+    private static Integer getLetterNumber(char letter) throws Exception {
         Integer letterIndex = null;
         if (letter >= 'A' && letter <= 'Z') {
             letterIndex = letter - 'A';
-        }
+        }else
         if (letter >= 'a' && letter <= 'z') {
             letterIndex = (int) letter - 'a';
+        }else {
+            System.err.println(INPUT_NOT_ALPHA_ERR);
+            throw new Exception(INPUT_NOT_ALPHA_ERR);
         }
         return letterIndex;
     }
