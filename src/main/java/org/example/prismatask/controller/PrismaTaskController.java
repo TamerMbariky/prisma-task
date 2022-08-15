@@ -48,9 +48,12 @@ public class PrismaTaskController {
     }
 
 
+
     @GetMapping(value="/stats",produces = MediaType.APPLICATION_JSON_VALUE)
     public StatsResponse stats() {
-        return statsResponse;
+        synchronized (statsResponse) {
+            return statsResponse;
+        }
     }
 
 

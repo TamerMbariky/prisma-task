@@ -44,7 +44,8 @@ public class PrismaTaskService {
         String sortedInputWord = countSort(inputWord);
         LOG.info("\"{}\" sorted is \"{}\"", inputWord, sortedInputWord);
         List<String> permutationsList = wordsCleanRepository.getPermutations(sortedInputWord);
-        LOG.info("{} permutations of \"{}\"", permutationsList.size() - 1, inputWord);
+        int permutationsNumber = permutationsList.size() - 1 > 0 ? permutationsList.size() - 1 : 0;
+        LOG.info("{} permutations of \"{}\"",permutationsNumber , inputWord);
         //BUG FIX ,The remove was done on the list inside the map ,
         // so the change was deleting the inputWord from the map
         List<String> toReturn = new ArrayList<>(permutationsList);
